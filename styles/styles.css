@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+body,
+html {
+  font-family: "Lato", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.modal_container {
+  background: #fffcd7;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}
+
+.modal_container .content_wrap {
+  width: 40vw;
+  height: 80%;
+  min-width: 620px;
+  background: #fff8b0;
+  border-radius: 25px;
+  color: #7a1347;
+  padding: 40px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: min-content min-content 10fr min-content;
+      grid-template-rows: -webkit-min-content -webkit-min-content 10fr -webkit-min-content;
+      grid-template-rows: min-content min-content 10fr min-content;
+  grid-gap: 8px;
+}
+
+.modal_container .content_wrap .title_wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+}
+
+.modal_container .content_wrap .title_wrap .title {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.modal_container .content_wrap .title_wrap img {
+  cursor: pointer;
+}
+
+.modal_container .content_wrap .worksheet_preview {
+  width: 100%;
+  background: #fffcd7;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.modal_container .content_wrap .cta_wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.modal_container .content_wrap .cta_wrapper .btn {
+  margin-right: 1rem;
+  border-radius: 4px;
+  color: #fcfcfc;
+  font-family: "Lato", sans-serif;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
+}
+
+.modal_container .content_wrap .cta_wrapper .btn.primary {
+  background: #7a1347;
+  border: 1px solid #5c0f36;
+}
+
+.modal_container .content_wrap .cta_wrapper .btn.secondary {
+  background: #42113c;
+  border: 1px solid #42113c;
+}
+
+.modal_container .content_wrap .cta_wrapper .btn:hover, .modal_container .content_wrap .cta_wrapper .btn:focus {
+  cursor: pointer;
+  color: #fff8b0;
+}
+/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+body,
+html {
+  font-family: "Lato", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.modal_container {
+  background: #fffcd7;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  .content_wrap {
+    width: 40vw;
+    height: 80%;
+    min-width: 620px;
+    background: #fff8b0;
+    border-radius: 25px;
+    color: #7a1347;
+    padding: 40px;
+    display: grid;
+    grid-template-rows: min-content min-content 10fr min-content;
+    grid-gap: 8px;
+
+    .title_wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+
+      .title {
+        font-weight: bold;
+        font-size: 24px;
+      }
+
+      img {
+        cursor: pointer;
+      }
+    }
+
+    .subtitle {
+    }
+
+    .worksheet_preview {
+      width: 100%;
+      background: #fffcd7;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+
+    .cta_wrapper {
+      display: flex;
+
+      .btn {
+        margin-right: 1rem;
+        border-radius: 4px;
+        color: #fcfcfc;
+        font-family: "Lato", sans-serif;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        transition: all 150ms ease-in-out;
+
+        &.primary {
+          background: #7a1347;
+          border: 1px solid #5c0f36;
+        }
+
+        &.secondary {
+          background: #42113c;
+          border: 1px solid #42113c;
+        }
+
+        &:hover,
+        &:focus {
+          cursor: pointer;
+          color: #fff8b0;
+        }
+      }
+    }
+  }
+}
