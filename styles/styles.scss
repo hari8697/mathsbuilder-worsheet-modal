@@ -3,6 +3,7 @@
 body,
 html {
   font-family: "Lato", sans-serif;
+  height: 100%;
 }
 
 * {
@@ -11,11 +12,47 @@ html {
   box-sizing: border-box;
 }
 
-.modal_container {
-  background: #fffcd7;
+.app_container {
   display: grid;
   place-items: center;
+  width: 100%;
   height: 100vh;
+
+  .btn {
+    margin-right: 1rem;
+    border-radius: 4px;
+    color: #fcfcfc;
+    font-family: "Lato", sans-serif;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    transition: all 150ms ease-in-out;
+
+    &.primary {
+      background: #7a1347;
+      border: 1px solid #5c0f36;
+    }
+
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      color: #fff8b0;
+    }
+  }
+}
+.modal_container {
+  background: #fffcd7;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  &.hidden {
+    // visibility: hidden;
+    display: none;
+  }
   .content_wrap {
     width: 40vw;
     height: 80%;
@@ -25,7 +62,7 @@ html {
     color: #7a1347;
     padding: 30px 40px;
     display: grid;
-    grid-template-rows: min-content min-content 10fr min-content;
+    grid-template-rows: min-content min-content 1fr min-content;
     grid-gap: 8px;
 
     .title_wrap {
@@ -48,11 +85,41 @@ html {
     }
 
     .worksheet_preview {
-      width: 100%;
+      // width: 100%;
+      // max-width: 100%;
       background: #fffcd7;
       margin-top: 10px;
       margin-bottom: 20px;
       border-radius: 10px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      .preview_preloader {
+        position: absolute;
+        z-index: 1;
+        &.hidden {
+          // visibility: hidden;
+          display: none;
+        }
+      }
+      .img_wrap {
+        display: grid;
+        place-items: center;
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        position: relative;
+
+        &:hover {
+          cursor: pointer;
+        }
+        .preview_img {
+          position: absolute;
+          height: 100%;
+          z-index: 2;
+        }
+      }
     }
 
     .cta_wrapper {
