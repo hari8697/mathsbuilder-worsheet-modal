@@ -7,7 +7,7 @@ const img_wrap = document.querySelector(".worksheet_preview .img_wrap")
 const lastSelectedUnit =
   "https://worksheets.mathsbuilder.com.au/worksheets/Language+cards/3/3_01"
 const postFixURL = "/z/1024/whiteboard.jpg"
-const sampleTempURL = "https://source.unsplash.com/random/1448x2048"
+const sampleTempURL = "https://source.unsplash.com/random/724x1024"
 
 whiteboard_btn.addEventListener("click", () => {
   modal_container.classList.remove("hidden")
@@ -80,7 +80,8 @@ const printAsPDF = () => {
     printJS({
       printable: "preview_img",
       type: "html",
-      style: "max-height:100%;",
+      style:
+        "html {height: 100%; display: grid; place-items: center;} #preview_img, img { max-height:95vh; }",
     })
   } else {
     console.error("Please wait while your image loads")
