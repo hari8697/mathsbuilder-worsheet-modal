@@ -7,6 +7,7 @@ const img_wrap = document.querySelector(".worksheet_preview .img_wrap")
 const lastSelectedUnit =
   "https://worksheets.mathsbuilder.com.au/worksheets/Language+cards/3/3_01"
 const postFixURL = "/z/1024/whiteboard.jpg"
+const sampleTempURL = "https://source.unsplash.com/random/1448x2048"
 
 whiteboard_btn.addEventListener("click", () => {
   modal_container.classList.remove("hidden")
@@ -25,20 +26,23 @@ const loadImage = (url) => {
     img.setAttribute("crossOrigin", "anonymous")
     img.src = url
     img.classList.add("preview_img")
+    img.id = "preview_img"
     await img.decode()
 
     // img is ready to use
-    console.log(img + " has been loaded")
-    console.log(img + " x: " + img.naturalWidth + ", y:" + img.naturalHeight)
+    console.log(img.classList[0] + " has been loaded")
+    console.log(
+      img.classList[0] + " x: " + img.naturalWidth + ", y:" + img.naturalHeight
+    )
     imageObj = img
     checkBool = true
-    console.log(imageObj)
+    // console.log(imageObj)
     img_wrap.appendChild(imageObj)
   })()
 }
 
 // loadImage(lastSelectedUnit + postFixURL)
-loadImage("https://source.unsplash.com/random/1448x2048")
+loadImage(sampleTempURL)
 
 const checkInterval = setInterval(() => {
   if (checkBool) {
@@ -48,19 +52,37 @@ const checkInterval = setInterval(() => {
 }, 200)
 
 document.getElementById("fullscreen_btn").addEventListener("click", () => {
-  if (screenfull.isEnabled) {
-    screenfull.request(img_wrap)
-  } else {
-    console.error("Fullscreen is disabled on your browser")
-  }
+  goFullScreen()
 })
 
-document
-  .querySelector(".worksheet_preview .img_wrap")
-  .addEventListener("click", () => {
+document.getElementById("print_btn").addEventListener("click", () => {
+  printAsPDF()
+})
+
+img_wrap.addEventListener("click", () => {
+  goFullScreen()
+})
+
+const goFullScreen = () => {
+  if (checkBool) {
     if (screenfull.isEnabled) {
       screenfull.toggle(img_wrap)
     } else {
       console.error("Fullscreen is disabled on your browser")
     }
-  })
+  } else {
+    console.error("Please wait while your image loads")
+  }
+}
+
+const printAsPDF = () => {
+  if (checkBool) {
+    printJS({
+      printable: "preview_img",
+      type: "html",
+      style: "max-height:100%;",
+    })
+  } else {
+    console.error("Please wait while your image loads")
+  }
+}
