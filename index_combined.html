@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mathsbuilder</title>
+    <!-- <link rel="stylesheet" href="./styles/styles.css" /> -->
+  </head>
+  <body>
+    <main>
+      <div class="app_container">
+        <button id="whiteboard" class="btn primary">Whiteboard</button>
+        <div id="modal_container" class="modal_container hidden">
+          <div class="content_wrap">
+            <div class="title_wrap">
+              <h1 class="title">Whiteboard</h1>
+              <img
+                id="close_modal_btn"
+                src="./src/images/close_symbol.svg"
+                alt=""
+              />
+            </div>
+            <p class="subtitle"></p>
+
+            <div class="worksheet_preview" id="worksheet_preview">
+              <div class="img_wrap"></div>
+              <p class="preview_preloader">Loading...</p>
+            </div>
+
+            <div class="cta_wrapper">
+              <button id="fullscreen_btn" class="btn primary">
+                Go Fullscreen
+              </button>
+              <button id="print_btn" class="btn secondary">
+                Print
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+
+  <script src="./scripts/screenfull.min.js"></script>
+  <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+  <!-- <script src="./app.js"></script> -->
+  <script>
+    const whiteboard_btn = document.getElementById("whiteboard")
+    const modal_container = document.getElementById("modal_container")
+    const close_modal_btn = document.getElementById("close_modal_btn")
+    const worksheet_preview = document.querySelector(".worksheet_preview")
+    const img_wrap = document.querySelector(".worksheet_preview .img_wrap")
+
+    const lastSelectedUnit =
+      "https://worksheets.mathsbuilder.com.au/worksheets/Language+cards/3/3_01"
+    const postFixURL = "/z/1024/whiteboard.jpg"
+    const sampleTempURL = "https://source.unsplash.com/random/724x1024"
+
+    whiteboard_btn.addEventListener("click", () => {
+      modal_container.classList.remove("hidden")
+    })
+
+    close_modal_btn.addEventListener("click", () => {
+      modal_container.classList.add("hidden")
+    })
+
+    let imageObj, checkBool
+
+    const loadImage = (url) => {
+      ;(async () => {
+        // console.log("loading: " + image + " url " + imageUrl)
+        const img = new Image()
+        img.setAttribute("crossOrigin", "anonymous")
+        img.src = url
+        img.classList.add("preview_img")
+        img.id = "preview_img"
+        await img.decode()
+
+        // img is ready to use
+        console.log(img.classList[0] + " has been loaded")
+        console.log(
+          img.classList[0] +
+            " x: " +
+            img.naturalWidth +
+            ", y:" +
+            img.naturalHeight
+        )
+        imageObj = img
+        checkBool = true
+        // console.log(imageObj)
+        img_wrap.appendChild(imageObj)
+      })()
+    }
+
+    // loadImage(lastSelectedUnit + postFixURL)
+    loadImage(sampleTempURL)
+
+    const checkInterval = setInterval(() => {
+      if (checkBool) {
+        document.querySelector(".preview_preloader").classList.add("hidden")
+        clearInterval(checkInterval)
+      }
+    }, 200)
+
+    document.getElementById("fullscreen_btn").addEventListener("click", () => {
+      goFullScreen()
+    })
+
+    document.getElementById("print_btn").addEventListener("click", () => {
+      printAsPDF()
+    })
+
+    img_wrap.addEventListener("click", () => {
+      goFullScreen()
+    })
+
+    const goFullScreen = () => {
+      if (checkBool) {
+        if (screenfull.isEnabled) {
+          screenfull.toggle(img_wrap)
+        } else {
+          console.error("Fullscreen is disabled on your browser")
+        }
+      } else {
+        console.error("Please wait while your image loads")
+      }
+    }
+
+    const printAsPDF = () => {
+      if (checkBool) {
+        printJS({
+          printable: "preview_img",
+          type: "html",
+          style:
+            "html {height: 100%; display: grid; place-items: center;} #preview_img, img { max-height:95vh; }",
+        })
+      } else {
+        console.error("Please wait while your image loads")
+      }
+    }
+  </script>
+</html>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+  body,
+  html {
+    font-family: "Lato", sans-serif;
+    height: 100%;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  #printJS {
+    display: none;
+  }
+
+  .app_container {
+    display: -ms-grid;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100vh;
+  }
+
+  .app_container .btn {
+    margin-right: 1rem;
+    border-radius: 4px;
+    color: #fcfcfc;
+    font-family: "Lato", sans-serif;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    -webkit-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+  }
+
+  .app_container .btn.primary {
+    background: #7a1347;
+    border: 1px solid #5c0f36;
+  }
+
+  .app_container .btn:hover,
+  .app_container .btn:focus {
+    cursor: pointer;
+    color: #fff8b0;
+  }
+
+  .modal_container {
+    background: #fffcd7;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .modal_container.hidden {
+    display: none;
+  }
+
+  .modal_container .content_wrap {
+    width: 40vw;
+    height: 80%;
+    min-width: 620px;
+    background: #fff8b0;
+    border-radius: 25px;
+    color: #7a1347;
+    padding: 30px 40px;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-rows: min-content min-content 1fr min-content;
+    grid-template-rows: -webkit-min-content -webkit-min-content 1fr -webkit-min-content;
+    grid-template-rows: min-content min-content 1fr min-content;
+    grid-gap: 8px;
+  }
+
+  .modal_container .content_wrap .title_wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .modal_container .content_wrap .title_wrap .title {
+    font-weight: bold;
+    font-size: 24px;
+  }
+
+  .modal_container .content_wrap .title_wrap img {
+    cursor: pointer;
+  }
+
+  .modal_container .content_wrap .worksheet_preview {
+    background: #fffcd7;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: -ms-grid;
+    display: grid;
+    place-items: center;
+  }
+
+  .modal_container .content_wrap .worksheet_preview .preview_preloader {
+    position: absolute;
+    z-index: 1;
+  }
+
+  .modal_container .content_wrap .worksheet_preview .preview_preloader.hidden {
+    display: none;
+  }
+
+  .modal_container .content_wrap .worksheet_preview .img_wrap {
+    display: -ms-grid;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .modal_container .content_wrap .worksheet_preview .img_wrap:hover {
+    cursor: pointer;
+  }
+
+  .modal_container .content_wrap .worksheet_preview .img_wrap .preview_img {
+    position: absolute;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .modal_container .content_wrap .cta_wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+
+  .modal_container .content_wrap .cta_wrapper .btn {
+    margin-right: 1rem;
+    border-radius: 4px;
+    color: #fcfcfc;
+    font-family: "Lato", sans-serif;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    -webkit-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+  }
+
+  .modal_container .content_wrap .cta_wrapper .btn.primary {
+    background: #7a1347;
+    border: 1px solid #5c0f36;
+  }
+
+  .modal_container .content_wrap .cta_wrapper .btn.secondary {
+    background: #42113c;
+    border: 1px solid #42113c;
+  }
+
+  .modal_container .content_wrap .cta_wrapper .btn:hover,
+  .modal_container .content_wrap .cta_wrapper .btn:focus {
+    cursor: pointer;
+    color: #fff8b0;
+  }
+  /*# sourceMappingURL=styles.css.map */
+</style>
