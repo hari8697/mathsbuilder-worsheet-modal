@@ -1,0 +1,339 @@
+<? $user = OYM_UserHandler::instance(); ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <?php //include_once('http://worksheets.oympublishing.com.au/load/js/iepngfix/iepngfix.php'); ?>
+    <title>
+      Home - On Your Mark Mathematics
+    </title>
+    <meta name="description" content="Mathematics books" />
+    <meta
+      name="keywords"
+      content="Maths, Mathematics, Books, Student, Teacher, Resource"
+    />
+    <meta name="robots" content="INDEX,FOLLOW" />
+    <!-- <meta http-equiv="REFRESH" content="0;url=<?php print Zend_Registry::get('config')->redirect->path;?>" />  -->
+    <script type="text/javascript">
+      var unitList = new Array()
+    </script>
+    <script src="/load/js/lib/jquery.js" type="text/javascript"></script>
+    <script src="/load/js/lib/thickbox.js" type="text/javascript"></script>
+    <script src="/load/js/rwts/imageLoader.js" type="text/javascript"></script>
+    <script
+      src="/load/js/lib/jquery.jcarousel.js"
+      type="text/javascript"
+    ></script>
+    <script src="/js/jquery.lightbox-0.5.js" type="text/javascript"></script>
+    <script src="/js/syscheck.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/load/js/rwts/plugindetect.js"></script>
+
+    <style type="text/css">
+      h1,
+      img,
+      div,
+      a,
+      input {
+        behavior: url(/load/js/iepngfix/iepngfix.htc);
+      }
+    </style>
+
+    <!-- Script for PrintJS loading -->
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://printjs-4de6.kxcdn.com/print.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="/load/jquery.jcarousel.css"
+      type="text/css"
+      media="screen"
+    />
+    <link
+      rel="stylesheet"
+      href="/load/tango/skin.css"
+      type="text/css"
+      media="screen"
+    />
+    <link
+      rel="stylesheet"
+      href="/load/thickbox.css"
+      type="text/css"
+      media="screen"
+    />
+
+    <!-- new theme for oym -->
+    <link rel="stylesheet" type="text/css" media="all" href="/css/reset.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="/css/text.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="/css/oym.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="print"
+      href="/css/print.css"
+    />
+
+    <!-- [if IE 6]>
+                        <link rel="stylesheet" type="text/css" media="print" href="/css/ie6.css" />
+                <![endif] -->
+
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" media="all" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/home-styles.css"
+      media="all"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/worksheets.css"
+      media="all"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/nice_menus.css"
+      media="all"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/nice_menus_default.css"
+      media="all"
+    />
+
+    <link rel="stylesheet" type="text/css" media="all" href="/css/ie6.css" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/jquery.lightbox-0.5.css"
+      media="all"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/jScrollPane.css"
+      media="all"
+    />
+    <script
+      src="/load/js/flash_check/AC_OETags.js"
+      language="javascript"
+      type="text/javascript"
+    ></script>
+    <script
+      src="/load/js/lib/AC_RunActiveContent.js"
+      language="javascript"
+      type="text/javascript"
+    ></script>
+
+    <script
+      src="/js/nice_menus.js"
+      language="javascript"
+      type="text/javascript"
+    ></script>
+
+    <script src="/js/worksheets.js" type="text/javascript"></script>
+    <script src="/js/jquery.msgScroller.js" type="text/javascript"></script>
+    <!-- Shared JS between the drupal site and the worksheets site-->
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/whiteboard.css"
+      media="all"
+    />
+  </head>
+  <body onload="startCheckingStatus()">
+    <!-- Page enclosures -->
+
+    <div id="page">
+      <div id="container">
+        <div id="header">
+          <!-- Header title and logo -->
+          <a href="<?= $this->storeurl ?>">
+            <h1 id="logo">On Your Mark Mathematics</h1>
+          </a>
+
+          <div id="top-message">
+            <?php
+
+                                                //$user = OYM_UserHandler::instance();
+
+                                                if($user->isValid()) {?>
+            <ul id="newsticker">
+              <li>Welcome to Maths Builder.</li>
+
+              <?      $subscription = OYM_SubscriptionHandler::instance();
+                                                        $subscription->updateStatus();
+              if($subscription->getAllowedSessionsPerModule()){
+              foreach($subscription->getAllowedSessionsPerModule() as $k => $v)
+              { if($v > 0)$lastSub = $k; } if($user->trialDaysLeft()){ //echo "
+              <li>
+                You have ".$user->trialDaysLeft()." days left of your trial
+                period.
+              </li>
+              "; echo "
+              <li>Please send us your comments and feedback.</li>
+              "; echo "
+              <li>Just click on the 'Contact us' link below.</li>
+              "; } foreach($subscription->modulePermissionsReadable[$lastSub] as
+              $key =>$val) { echo "
+              <li>".$val."</li>
+              "; } }else{ if($subscription->previousCustomer()){ echo "
+              <li>
+                <strong>Your Maths Builder subscription has expired.</strong>
+              </li>
+              "; echo "
+              <li>
+                You will need to purchase a new subscription before using Maths
+                Builder.
+              </li>
+              "; }else{ if($user->trialDaysLeft()){ if($user->FreeTrialType ==
+              0){ echo "
+              <li>Your free trial period has been extended to four weeks.</li>
+              "; } //echo "
+              <li>
+                You have ".$user->trialDaysLeft()." days left of your trial
+                period.
+              </li>
+              "; echo "
+              <li>Please send us your comments and feedback.</li>
+              "; echo "
+              <li>Just click on the 'Contact us' link below.</li>
+              "; } if($user->trialDaysLeft() == 0){ echo "
+              <li>
+                <strong
+                  >Your free trial has expired.<br />You will need to purchase a
+                  subscription before using Maths Builder.</strong
+                >
+              </li>
+              "; echo "
+              <li>Please send us your comments and feedback.</li>
+              "; echo "
+              <li>Just click on the 'Contact us' link below.</li>
+              "; } } } ?>
+            </ul>
+            <!-- #newsticker -->
+            <? }else{ ?>
+            <ul id="newsticker">
+              <li>Welcome to Maths Builder.</li>
+              <li>
+                Each interactive game helps students master the skills on the
+                matching worksheet.
+              </li>
+            </ul>
+            <?}?>
+          </div>
+          <!-- #message -->
+
+          <div id="logon">
+            <?php
+
+                                                        $user = OYM_UserHandler::instance();
+                                                        if(!$user->isValid()) {
+            ?>
+            <a
+              href="javascript:void(0);"
+              onclick="shouldReloadAfterLogin = true;showTb('/worksheets/login',false,570,270);"
+              >Log On &#62;</a
+            >
+
+            <?php } else{?>
+            <a href="/worksheets/login/logout" onclick="">Log Out &#62; </a>
+            <?php }?>
+          </div>
+          <!-- #Logon -->
+
+          <!-- Navigation bar -->
+          <div id="navbar">
+            <? $menuList = new OYM_MenuGenerator;
+                                                        $menuList->setStoreurl($this->storeurl);
+            $menuList->set_menu_list("primary-links", "nice_menu");
+            $menuList->generate_menu(); $menuList->make_output(0,"
+            class='nice-menu nice-menu-down' id='nice-menu-2'");
+            echo($menuList->getOutput());?>
+          </div>
+          <!-- #navbar -->
+        </div>
+        <!-- #header -->
+        <div id="main-content"><?= $this->layout()->content ?></div>
+        <!-- #content -->
+        <div id="footer">
+          <div id="footer-menu">
+            <? $footerList = new OYM_MenuGenerator;
+                                                        $footerList->setStoreurl($this->storeurl);
+            $footerList->set_menu_list("menu-footer-links", "horizontal");
+            $footerList->generate_menu(); $footerList->make_output(0,"");
+            echo($footerList->getOutput());?>
+          </div>
+          <!-- #footer-menu -->
+          <a
+            href="http://www.facebook.com/pages/Maths-Builder/116917248348920"
+            target="_blank"
+          >
+            <div id="facebook-icon"></div
+          ></a>
+          <div id="copyright">
+            &copy; Alan McSeveny
+            <?=date("Y");?>
+          </div>
+        </div>
+        <!-- #footer -->
+      </div>
+      <!-- #container -->
+    </div>
+    <!-- #page -->
+    <!-- Viewing modal for whiteboard -->
+    <div id="modal_container" class="modal_container hidden">
+      <div class="content_wrap">
+        <div class="title_wrap">
+          <h1 class="title">Whiteboard</h1>
+          <img id="close_modal_btn" src="/images/close.svg" alt="" />
+        </div>
+        <p class="subtitle"></p>
+
+        <div class="worksheet_preview" id="worksheet_preview">
+          <div class="img_wrap"></div>
+          <p class="preview_preloader">Loading...</p>
+        </div>
+
+        <div class="cta_wrapper">
+          <button id="fullscreen_btn" class="btn primary">
+            Go Fullscreen
+          </button>
+          <button id="print_btn" class="btn secondary">
+            Print
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <? global $debugmessage; print_r($debugmessage);?>
+    <script type="text/javascript">
+      var _gaq = _gaq || []
+      _gaq.push(["_setAccount", "UA-7364112-6"])
+      _gaq.push(["_setDomainName", ".com.au"])
+      _gaq.push(["_trackPageview"])
+      ;(function () {
+        var ga = document.createElement("script")
+        ga.type = "text/javascript"
+        ga.async = true
+        ga.src =
+          ("https:" == document.location.protocol
+            ? "https://ssl"
+            : "http://www") + ".google-analytics.com/ga.js"
+        var s = document.getElementsByTagName("script")[0]
+        s.parentNode.insertBefore(ga, s)
+      })()
+    </script>
+  </body>
+  <script src="/js/screenfull.min.js" type="text/javascript"></script>
+  <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+  <script src="/js/whiteboard.js" type="text/javascript"></script>
+</html>

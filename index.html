@@ -12,6 +12,7 @@
       <div class="app_container">
         <button id="whiteboard" class="btn primary">Whiteboard</button>
         <div id="modal_container" class="modal_container hidden">
+          <span class="bg_cover" id="bg_cover"></span>
           <div class="content_wrap">
             <div class="title_wrap">
               <h1 class="title">Whiteboard</h1>
@@ -25,7 +26,15 @@
 
             <div class="worksheet_preview" id="worksheet_preview">
               <div class="img_wrap"></div>
-              <p class="preview_preloader">Loading...</p>
+              <div class="preview_preloader">
+                <!-- <p class="">Loading...</p> -->
+                <div class="lds-ring">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
             </div>
 
             <div class="cta_wrapper">

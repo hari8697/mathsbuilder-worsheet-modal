@@ -3,6 +3,7 @@ const modal_container = document.getElementById("modal_container")
 const close_modal_btn = document.getElementById("close_modal_btn")
 const worksheet_preview = document.querySelector(".worksheet_preview")
 const img_wrap = document.querySelector(".worksheet_preview .img_wrap")
+const bg_cover = document.getElementById("bg_cover")
 
 const lastSelectedUnit =
   "https://worksheets.mathsbuilder.com.au/worksheets/Language+cards/3/3_01"
@@ -10,11 +11,15 @@ const postFixURL = "/z/1024/whiteboard.jpg"
 const sampleTempURL = "https://source.unsplash.com/random/724x1024"
 
 whiteboard_btn.addEventListener("click", () => {
+  loadImage(sampleTempURL)
   modal_container.classList.remove("hidden")
 })
 
 close_modal_btn.addEventListener("click", () => {
-  modal_container.classList.add("hidden")
+  closeAndResetModal()
+})
+bg_cover.addEventListener("click", () => {
+  closeAndResetModal()
 })
 
 let imageObj, checkBool
@@ -42,7 +47,7 @@ const loadImage = (url) => {
 }
 
 // loadImage(lastSelectedUnit + postFixURL)
-loadImage(sampleTempURL)
+// loadImage(sampleTempURL)
 
 const checkInterval = setInterval(() => {
   if (checkBool) {
@@ -86,4 +91,13 @@ const printAsPDF = () => {
   } else {
     console.error("Please wait while your image loads")
   }
+}
+
+const closeAndResetModal = () => {
+  modal_container.classList.add("hidden")
+  if (img_wrap.firstChild) {
+    img_wrap.removeChild(img_wrap.firstChild)
+  }
+  checkBool = false
+  document.querySelector(".preview_preloader").classList.remove("hidden")
 }
